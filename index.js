@@ -13,43 +13,71 @@ import './styles.css'
 const PALETTES = {
 	white: {
 		background: '#ffffff',
+		landuse: '#f4f4f4',
 		park: '#defbe6',
 		water: '#d0e2ff',
-		road: '#e0e0e0',
+		building: '#e0e0e0',
+		buildingOutline: '#c6c6c6',
+		roadMinor: '#c6c6c6',
+		roadMajor: '#a8a8a8',
+		rail: '#c6c6c6',
 		boundary: '#8d8d8d',
 		text: '#161616',
+		textMuted: '#525252',
 		halo: '#ffffff'
 	},
 	g10: {
 		background: '#f4f4f4',
+		landuse: '#ffffff',
 		park: '#a7f0ba',
 		water: '#a6c8ff',
-		road: '#e0e0e0',
+		building: '#e0e0e0',
+		buildingOutline: '#c6c6c6',
+		roadMinor: '#c6c6c6',
+		roadMajor: '#a8a8a8',
+		rail: '#c6c6c6',
 		boundary: '#8d8d8d',
 		text: '#161616',
+		textMuted: '#525252',
 		halo: '#f4f4f4'
 	},
 	g90: {
 		background: '#262626',
-		park: '#044317',
-		water: '#001d6c',
-		road: '#525252',
+		landuse: '#2c2c2c',
+		park: '#1f3324',
+		water: '#393939',
+		building: '#333333',
+		buildingOutline: '#1e1e1e',
+		roadMinor: '#525252',
+		roadMajor: '#6f6f6f',
+		rail: '#4c4c4c',
 		boundary: '#6f6f6f',
 		text: '#f4f4f4',
+		textMuted: '#c6c6c6',
 		halo: '#161616'
 	},
 	g100: {
 		background: '#161616',
-		park: '#022d0d',
-		water: '#001141',
-		road: '#393939',
+		landuse: '#1c1c1c',
+		park: '#1a241c',
+		water: '#262626',
+		building: '#242424',
+		buildingOutline: '#111111',
+		roadMinor: '#525252',
+		roadMajor: '#6f6f6f',
+		rail: '#3d3d3d',
 		boundary: '#525252',
 		text: '#f4f4f4',
+		textMuted: '#c6c6c6',
 		halo: '#161616'
 	}
 }
 
 const THEME_KEY = 'carbon-maplibre-theme'
+const START = {
+	center: [-73.9565, 40.7185],
+	zoom: 13.6
+}
 
 const CITIES = [
 	{ name: 'New York', coordinates: [-74.006, 40.7128], value: 8.8 },
@@ -102,11 +130,26 @@ function carbonStyle(theme) {
 				paint: { 'background-color': p.background }
 			},
 			{
+				id: 'landuse',
+				type: 'fill',
+				source: 'openmaptiles',
+				'source-layer': 'landuse',
+				paint: { 'fill-color': p.landuse, 'fill-opacity': 0.5 }
+			},
+			{
 				id: 'park',
 				type: 'fill',
 				source: 'openmaptiles',
 				'source-layer': 'park',
-				paint: { 'fill-color': p.park, 'fill-opacity': 0.55 }
+				paint: { 'fill-color': p.park, 'fill-opacity': 0.45 }
+			},
+			{
+				id: 'landcover-wood',
+				type: 'fill',
+				source: 'openmaptiles',
+				'source-layer': 'landcover',
+				filter: ['==', ['get', 'class'], 'wood'],
+				paint: { 'fill-color': p.park, 'fill-opacity': 0.35 }
 			},
 			{
 				id: 'water',
@@ -123,6 +166,103 @@ function carbonStyle(theme) {
 				paint: { 'line-color': p.water, 'line-width': 0.8 }
 			},
 			{
+				id: 'pier',
+				type: 'fill',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				filter: ['==', ['get', 'class'], 'pier'],
+				paint: { 'fill-color': p.background }
+			},
+			{
+				id: 'building',
+				type: 'fill',
+				source: 'openmaptiles',
+				'source-layer': 'building',
+				minzoom: 13,
+				paint: {
+					'fill-color': p.building,
+					'fill-opacity': 0.9,
+					'fill-outline-color': p.buildingOutline
+				}
+			},
+			{
+				id: 'rail',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 13,
+				filter: ['match', ['get', 'class'], ['rail', 'transit'], true, false],
+				paint: {
+					'line-color': p.rail,
+					'line-width': ['interpolate', ['linear'], ['zoom'], 13, 0.6, 16, 1.4]
+				}
+			},
+			{
+				id: 'road-path',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 14,
+				filter: ['==', ['get', 'class'], 'path'],
+				paint: {
+					'line-color': p.roadMinor,
+					'line-opacity': 0.7,
+					'line-width': ['interpolate', ['linear'], ['zoom'], 14, 0.4, 17, 1.4]
+				}
+			},
+			{
+				id: 'road-minor',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 11,
+				filter: ['match', ['get', 'class'], ['minor', 'service', 'tertiary'], true, false],
+				layout: { 'line-cap': 'round', 'line-join': 'round' },
+				paint: {
+					'line-color': p.roadMinor,
+					'line-width': ['interpolate', ['exponential', 1.4], ['zoom'], 11, 0.6, 14, 1.6, 17, 6]
+				}
+			},
+			{
+				id: 'road-major',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 8,
+				filter: ['match', ['get', 'class'], ['primary', 'secondary', 'trunk'], true, false],
+				layout: { 'line-cap': 'round', 'line-join': 'round' },
+				paint: {
+					'line-color': p.roadMajor,
+					'line-width': ['interpolate', ['exponential', 1.4], ['zoom'], 8, 0.8, 12, 1.8, 17, 8]
+				}
+			},
+			{
+				id: 'road-motorway',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 5,
+				filter: ['==', ['get', 'class'], 'motorway'],
+				layout: { 'line-cap': 'round', 'line-join': 'round' },
+				paint: {
+					'line-color': p.roadMajor,
+					'line-width': ['interpolate', ['exponential', 1.4], ['zoom'], 5, 0.8, 10, 2, 17, 10]
+				}
+			},
+			{
+				id: 'bridge',
+				type: 'line',
+				source: 'openmaptiles',
+				'source-layer': 'transportation',
+				minzoom: 12,
+				filter: ['==', ['get', 'brunnel'], 'bridge'],
+				layout: { 'line-cap': 'round', 'line-join': 'round' },
+				paint: {
+					'line-color': p.roadMajor,
+					'line-width': ['interpolate', ['linear'], ['zoom'], 12, 1.4, 16, 5]
+				}
+			},
+			{
 				id: 'boundary',
 				type: 'line',
 				source: 'openmaptiles',
@@ -134,15 +274,81 @@ function carbonStyle(theme) {
 				}
 			},
 			{
-				id: 'road',
-				type: 'line',
+				id: 'road-label',
+				type: 'symbol',
 				source: 'openmaptiles',
-				'source-layer': 'transportation',
-				minzoom: 5,
-				filter: ['match', ['get', 'class'], ['motorway', 'trunk', 'primary', 'secondary'], true, false],
+				'source-layer': 'transportation_name',
+				minzoom: 13,
+				layout: {
+					'symbol-placement': 'line',
+					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
+					'text-font': ['Noto Sans Regular'],
+					'text-size': ['interpolate', ['linear'], ['zoom'], 13, 10, 16, 12],
+					'text-rotation-alignment': 'map',
+					'text-keep-upright': true
+				},
 				paint: {
-					'line-color': p.road,
-					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 14, 2.2]
+					'text-color': p.textMuted,
+					'text-halo-color': p.halo,
+					'text-halo-width': 1
+				}
+			},
+			{
+				id: 'water-label',
+				type: 'symbol',
+				source: 'openmaptiles',
+				'source-layer': 'water_name',
+				layout: {
+					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
+					'text-font': ['Noto Sans Italic'],
+					'text-size': 12,
+					'text-max-width': 6
+				},
+				paint: {
+					'text-color': p.textMuted,
+					'text-halo-color': p.halo,
+					'text-halo-width': 1
+				}
+			},
+			{
+				id: 'place-neighbourhood',
+				type: 'symbol',
+				source: 'openmaptiles',
+				'source-layer': 'place',
+				minzoom: 12,
+				filter: ['match', ['get', 'class'], ['suburb', 'neighbourhood', 'quarter'], true, false],
+				layout: {
+					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
+					'text-font': ['Noto Sans Bold'],
+					'text-size': ['interpolate', ['linear'], ['zoom'], 12, 11, 15, 14],
+					'text-transform': 'uppercase',
+					'text-letter-spacing': 0.08,
+					'text-max-width': 8
+				},
+				paint: {
+					'text-color': p.text,
+					'text-halo-color': p.halo,
+					'text-halo-width': 1.2
+				}
+			},
+			{
+				id: 'place-city',
+				type: 'symbol',
+				source: 'openmaptiles',
+				'source-layer': 'place',
+				minzoom: 4,
+				maxzoom: 13,
+				filter: ['==', ['get', 'class'], 'city'],
+				layout: {
+					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
+					'text-font': ['Noto Sans Regular'],
+					'text-size': ['interpolate', ['linear'], ['zoom'], 4, 10, 10, 16],
+					'text-max-width': 8
+				},
+				paint: {
+					'text-color': p.text,
+					'text-halo-color': p.halo,
+					'text-halo-width': 1
 				}
 			},
 			{
@@ -162,25 +368,6 @@ function carbonStyle(theme) {
 					'text-color': p.text,
 					'text-halo-color': p.halo,
 					'text-halo-width': 1.2
-				}
-			},
-			{
-				id: 'place-city',
-				type: 'symbol',
-				source: 'openmaptiles',
-				'source-layer': 'place',
-				minzoom: 4,
-				filter: ['==', ['get', 'class'], 'city'],
-				layout: {
-					'text-field': ['coalesce', ['get', 'name:en'], ['get', 'name']],
-					'text-font': ['Noto Sans Regular'],
-					'text-size': ['interpolate', ['linear'], ['zoom'], 4, 10, 10, 16],
-					'text-max-width': 8
-				},
-				paint: {
-					'text-color': p.text,
-					'text-halo-color': p.halo,
-					'text-halo-width': 1
 				}
 			}
 		]
@@ -218,12 +405,13 @@ function createMap(theme) {
 	map = new maplibregl.Map({
 		container: 'map',
 		style: carbonStyle(theme),
-		center: [10, 20],
-		zoom: 1.6,
+		center: START.center,
+		zoom: START.zoom,
+		maxPitch: 0,
 		attributionControl: true
 	})
 
-	map.addControl(new maplibregl.NavigationControl(), 'top-right')
+	map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
 	map.on('style.load', addProportionalSymbols)
 	map.on('click', 'city-symbols', onCityClick)
 	map.on('mouseenter', 'city-symbols', () => {
@@ -251,6 +439,7 @@ function addProportionalSymbols() {
 		id: 'city-symbols',
 		type: 'circle',
 		source: 'cities',
+		maxzoom: 7,
 		paint: {
 			'circle-radius': ['interpolate', ['linear'], ['get', 'value'], 1, 6, 25, 28],
 			'circle-color': '#0f62fe',
