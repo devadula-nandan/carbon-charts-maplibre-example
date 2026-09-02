@@ -412,7 +412,7 @@ function createMap(theme) {
 	})
 
 	map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
-	map.on('load', () => map.resize())
+	requestAnimationFrame(() => map.resize())
 	window.addEventListener('resize', () => map.resize())
 	map.on('style.load', addProportionalSymbols)
 	map.on('click', 'city-symbols', onCityClick)

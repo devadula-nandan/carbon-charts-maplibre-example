@@ -10,14 +10,14 @@
 html,
 body {
 	margin: 0;
-	height: 100dvh;
-	overflow: hidden;
+	height: 100%;
 	font-family: var(--cds-font);
 }
 
 body {
-	display: grid;
-	grid-template-rows: auto 1fr;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
 	color: var(--text);
 	background: var(--bg);
 }
@@ -59,6 +59,7 @@ body.theme-g100 {
 }
 
 .panel {
+	flex: 0 0 auto;
 	display: grid;
 	gap: 1.25rem;
 	padding: 1.25rem 1.5rem 1rem;
@@ -117,6 +118,8 @@ h1 {
 }
 
 .banner {
+	position: relative;
+	z-index: 2;
 	padding: 0.75rem 1.5rem;
 	background: #8a3ffc;
 	color: #ffffff;
@@ -128,21 +131,14 @@ h1 {
 }
 
 .map-shell {
+	flex: 1 1 auto;
+	position: relative;
 	min-height: 0;
-	display: grid;
-	grid-template-rows: auto 1fr;
-}
-
-#map,
-.maplibregl-map,
-.maplibregl-canvas-container,
-.maplibregl-canvas {
-	width: 100%;
-	height: 100%;
 }
 
 #map {
-	min-height: 0;
+	position: absolute;
+	inset: 0;
 }
 
 .maplibregl-popup-content {
