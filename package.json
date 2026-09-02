@@ -1,0 +1,19 @@
+{
+	"name": "carbon-charts-maplibre-example",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Carbon Design System MapLibre themes example based on Spatial Charts (https://carbondesignsystem.com/data-visualization/spatial-charts/)",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"start": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"maplibre-gl": "^5.19.0"
+	},
+	"devDependencies": {
+		"vite": "^6.3.5"
+	}
+}

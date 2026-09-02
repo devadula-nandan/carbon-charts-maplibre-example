@@ -1,0 +1,138 @@
+:root {
+	--cds-blue-60: #0f62fe;
+	--cds-font: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	height: 100%;
+	font-family: var(--cds-font);
+}
+
+body {
+	display: grid;
+	grid-template-rows: auto auto 1fr;
+	color: var(--text);
+	background: var(--bg);
+}
+
+body.theme-white {
+	--bg: #ffffff;
+	--layer: #f4f4f4;
+	--border: #e0e0e0;
+	--text: #161616;
+	--text-secondary: #525252;
+	--link: #0f62fe;
+}
+
+body.theme-g10 {
+	--bg: #f4f4f4;
+	--layer: #ffffff;
+	--border: #e0e0e0;
+	--text: #161616;
+	--text-secondary: #525252;
+	--link: #0f62fe;
+}
+
+body.theme-g90 {
+	--bg: #262626;
+	--layer: #393939;
+	--border: #525252;
+	--text: #f4f4f4;
+	--text-secondary: #c6c6c6;
+	--link: #78a9ff;
+}
+
+body.theme-g100 {
+	--bg: #161616;
+	--layer: #262626;
+	--border: #393939;
+	--text: #f4f4f4;
+	--text-secondary: #c6c6c6;
+	--link: #78a9ff;
+}
+
+.panel {
+	display: grid;
+	gap: 1.25rem;
+	padding: 1.25rem 1.5rem 1rem;
+	background: var(--bg);
+	border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+	margin: 0 0 0.25rem;
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: var(--text-secondary);
+}
+
+h1 {
+	margin: 0 0 0.5rem;
+	font-size: 1.75rem;
+	font-weight: 400;
+	line-height: 1.2;
+}
+
+.lede {
+	margin: 0;
+	max-width: 52rem;
+	color: var(--text-secondary);
+	font-size: 0.875rem;
+	line-height: 1.4;
+}
+
+.lede a {
+	color: var(--link);
+}
+
+.theme-switcher {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.theme-btn {
+	height: 2rem;
+	padding: 0 0.75rem;
+	border: 1px solid var(--border);
+	background: var(--layer);
+	color: var(--text);
+	font: inherit;
+	font-size: 0.8125rem;
+	cursor: pointer;
+}
+
+.theme-btn:hover,
+.theme-btn.is-active {
+	border-color: var(--cds-blue-60);
+	box-shadow: inset 0 0 0 1px var(--cds-blue-60);
+}
+
+.banner {
+	padding: 0.75rem 1.5rem;
+	background: #8a3ffc;
+	color: #ffffff;
+	font-size: 0.875rem;
+}
+
+.banner[hidden] {
+	display: none;
+}
+
+#map {
+	min-height: 28rem;
+	width: 100%;
+}
+
+.maplibregl-popup-content,
+.mapboxgl-popup-content {
+	font-family: var(--cds-font);
+	padding: 0.75rem 1rem;
+}

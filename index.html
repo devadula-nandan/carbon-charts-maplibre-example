@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Carbon Charts — MapLibre themes</title>
+		<link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/plex/sans.css" />
+	</head>
+	<body class="theme-g100">
+		<header class="panel">
+			<div class="panel__intro">
+				<p class="eyebrow">Carbon Design System · Spatial charts</p>
+				<h1>MapLibre themes</h1>
+				<p class="lede">
+					<a href="https://maplibre.org/maplibre-gl-js/docs/" target="_blank" rel="noreferrer"
+						>MapLibre GL</a
+					>
+					is an open-source fork of Mapbox GL JS v1.13. This demo recreates Carbon’s White, Gray 10,
+					Gray 90, and Gray 100 map themes with open vector tiles — no Mapbox token required.
+					Carbon-styled proportional symbols are overlaid as a second encoding.
+				</p>
+			</div>
+
+			<div class="theme-switcher" role="group" aria-label="Carbon MapLibre theme">
+				<button type="button" class="theme-btn" data-theme="white">White</button>
+				<button type="button" class="theme-btn" data-theme="g10">Gray 10</button>
+				<button type="button" class="theme-btn" data-theme="g90">Gray 90</button>
+				<button type="button" class="theme-btn is-active" data-theme="g100">Gray 100</button>
+			</div>
+		</header>
+
+		<div id="banner" class="banner" hidden></div>
+		<div id="map" aria-label="Carbon-themed MapLibre map"></div>
+
+		<script type="module" src="index.js"></script>
+	</body>
+</html>
