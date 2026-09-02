@@ -5,10 +5,10 @@ import './styles.css'
 /**
  * Open-source Carbon map themes on MapLibre GL.
  *
- * Carbon’s published spatial-chart styles are Mapbox-hosted
- * (https://carbondesignsystem.com/data-visualization/spatial-charts/).
- * This demo mirrors those four themes with MapLibre and OpenFreeMap
- * vector tiles so the example stays permissively licensed.
+ * Carbon spatial-chart themes:
+ * https://carbondesignsystem.com/data-visualization/spatial-charts/
+ * This demo mirrors White, Gray 10, Gray 90, and Gray 100 with MapLibre
+ * and OpenFreeMap vector tiles.
  */
 const PALETTES = {
 	white: {

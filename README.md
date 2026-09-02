@@ -2,7 +2,7 @@
 
 Open-source recreation of the [Carbon Spatial Charts](https://carbondesignsystem.com/data-visualization/spatial-charts/) map themes using [MapLibre GL](https://maplibre.org/maplibre-gl-js/docs/) and [OpenFreeMap](https://openfreemap.org/) vector tiles.
 
-Carbon’s published styles are Mapbox-hosted. This example keeps the same four themes (White, Gray 10, Gray 90, Gray 100) without a Mapbox token.
+This example keeps Carbon’s White, Gray 10, Gray 90, and Gray 100 themes with open vector tiles. No access token is required.
 
 | Theme | Background | Water |
 | --- | --- | --- |
