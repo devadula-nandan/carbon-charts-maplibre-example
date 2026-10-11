@@ -1,39 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Carbon Charts — MapLibre themes</title>
+		<meta
+			name="description"
+			content="Live, documented MapLibre GL JS examples styled with the Carbon Design System map themes: choropleths, proportional symbols, heatmaps, clusters, 3D terrain, globe and more."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Carbon × MapLibre examples</title>
+		<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+		<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin />
 		<link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/plex/sans.css" />
+		<link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/plex/mono.css" />
 	</head>
 	<body class="theme-g100">
-		<header class="panel">
-			<div class="panel__intro">
-				<p class="eyebrow">Carbon Design System · Spatial charts</p>
-				<h1>MapLibre themes</h1>
-				<p class="lede">
-					<a href="https://maplibre.org/maplibre-gl-js/docs/" target="_blank" rel="noreferrer"
-						>MapLibre GL</a
-					>
-					is an open-source WebGL mapping library. This demo recreates Carbon’s White, Gray 10, Gray
-					90, and Gray 100 map themes with streets, buildings, and neighborhood labels — no access
-					token required. Carbon-styled proportional symbols appear when you zoom out.
-				</p>
-			</div>
+		<a class="skip-link" href="#main">Skip to example</a>
 
-			<div class="theme-switcher" role="group" aria-label="Carbon MapLibre theme">
-				<button type="button" class="theme-btn" data-theme="white">White</button>
-				<button type="button" class="theme-btn" data-theme="g10">Gray 10</button>
-				<button type="button" class="theme-btn" data-theme="g90">Gray 90</button>
-				<button type="button" class="theme-btn is-active" data-theme="g100">Gray 100</button>
-			</div>
+		<header class="shell-header">
+			<button
+				type="button"
+				class="shell-header__menu"
+				id="menu-button"
+				aria-label="Open example list"
+				aria-controls="side-nav"
+				aria-expanded="false"
+			>
+				<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+					<path d="M2 14.8h16V16H2zm0-3.6h16v1.2H2zm0-3.6h16v1.2H2zM2 4h16v1.2H2z" fill="currentColor" />
+				</svg>
+			</button>
+			<a class="shell-header__name" href="#/themes"><span>Carbon</span> × MapLibre</a>
+			<div class="shell-header__spacer"></div>
+			<div class="theme-switcher" role="group" aria-label="Carbon theme" id="theme-switcher"></div>
+			<a
+				class="shell-header__link"
+				href="https://github.com/devadula-nandan/carbon-charts-maplibre-example"
+				target="_blank"
+				rel="noreferrer"
+				>GitHub</a
+			>
 		</header>
 
-		<div class="map-shell">
-			<div id="banner" class="banner" hidden></div>
-			<div id="map" aria-label="Carbon-themed MapLibre map"></div>
+		<div class="shell">
+			<nav class="side-nav" id="side-nav" aria-label="Examples">
+				<div class="side-nav__search">
+					<label class="visually-hidden" for="nav-filter">Filter examples</label>
+					<input id="nav-filter" type="search" placeholder="Filter examples" autocomplete="off" spellcheck="false" />
+				</div>
+				<div id="nav-list"></div>
+				<p class="side-nav__empty" id="nav-empty" hidden>No examples match.</p>
+				<p class="side-nav__about">
+					This is only an example: Carbon colors on top of MapLibre’s capabilities. It is not an official Carbon or
+					IBM product. Built by Claude, Anthropic’s AI model, to check its capabilities.
+				</p>
+			</nav>
+			<div class="scrim" id="scrim" hidden></div>
+
+			<main class="workspace" id="main" tabindex="-1">
+				<section class="stage" id="stage" aria-label="Live example">
+					<div class="notifications" id="notifications"></div>
+				</section>
+
+				<aside class="docs" aria-label="Example documentation">
+					<header class="docs__header">
+						<p class="eyebrow" id="doc-category"></p>
+						<h1 id="doc-title"></h1>
+						<p class="docs__summary" id="doc-summary"></p>
+					</header>
+
+					<section class="docs__section" data-controls-section hidden>
+						<h2>Controls</h2>
+						<div class="controls" id="controls" data-controls></div>
+					</section>
+
+					<section class="docs__section">
+						<h2>How it works</h2>
+						<div id="doc-description"></div>
+					</section>
+
+					<section class="docs__section">
+						<h2>MapLibre APIs used</h2>
+						<ul class="api-list" id="doc-apis"></ul>
+					</section>
+
+					<section class="docs__section">
+						<div class="docs__section-head">
+							<h2>Source</h2>
+							<div class="docs__actions">
+								<a id="doc-file" target="_blank" rel="noreferrer"></a>
+								<button type="button" class="btn btn--ghost btn--sm" id="copy-source">Copy</button>
+							</div>
+						</div>
+						<pre class="code" id="doc-source" tabindex="0"></pre>
+					</section>
+
+					<nav class="pager" aria-label="Previous and next example">
+						<a id="pager-prev" class="pager__link"></a>
+						<a id="pager-next" class="pager__link pager__link--next"></a>
+					</nav>
+				</aside>
+			</main>
 		</div>
 
-		<script type="module" src="index.js"></script>
+		<noscript>
+			<p class="noscript">These examples are interactive WebGL maps and need JavaScript to run.</p>
+		</noscript>
+		<script type="module" src="/src/main.js"></script>
 	</body>
 </html>
