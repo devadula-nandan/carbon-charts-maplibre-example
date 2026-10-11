@@ -2,18 +2,29 @@
 	"name": "carbon-charts-maplibre-example",
 	"private": true,
 	"version": "1.0.0",
-	"description": "Carbon Design System MapLibre themes example based on Spatial Charts (https://carbondesignsystem.com/data-visualization/spatial-charts/)",
+	"description": "Live, documented MapLibre GL JS examples styled with the Carbon Design System map themes",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"start": "vite",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"maplibre-gl": "^5.19.0"
+		"maplibre-gl": "^5.19.0",
+		"topojson-client": "^3.1.0",
+		"world-atlas": "^2.0.2"
 	},
 	"devDependencies": {
-		"vite": "^6.3.5"
+		"@maplibre/maplibre-gl-style-spec": "^26.4.4",
+		"jsdom": "^30.1.2",
+		"vite": "^6.3.5",
+		"vitest": "^5.0.3"
+	},
+	"homepage": "https://devadula-nandan.github.io/carbon-charts-maplibre-example/",
+	"engines": {
+		"node": ">=20"
 	}
 }
